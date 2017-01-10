@@ -4,18 +4,24 @@
 
 function loadBooks() {
   var books = $('#books');
-  var book = '/components/books/book.html';
+  var bookPath = serverURL + "/getbooks";
+  var bookHTML = '/components/books/book.html';
 
   // loop for each book
-  $.get(book, function(data) {
+  $.get(bookPath, function(data) {
 
     /* each is lodash library's function that easily iterates for every element
        in the given array and calls the function for each array  */
 
-    _.forEach([1, 2, 3, 4, 5, 6], function() {
+    _.each(data, function(book) {
+      $.get(bookHTML, function(bookComponent) {
 
-      books.append(data);
+        bookComponent = bookComponent.replace("BOOKIMAGE", book.bookImage);
+        bookComponent = bookComponent.replace("BOOKNAME", book.bookName);
+        bookComponent = bookComponent.replace("BOOKBIO", book.bookSummary);
 
+        books.append(bookComponent);
+      });
     });
   });
 
@@ -24,16 +30,23 @@ function loadBooks() {
 
 function loadAuthors() {
   var authors = $('#authors');
-  var author = '/components/authors/author.html';
+  var authorPath = serverURL + "/getauthors";
+  var authorHTML = '/components/authors/author.html';
 
-  $.get(author, function(data) {
 
-    _.forEach([1, 2, 3, 4, 5, 6], function() {
+  $.get(authorPath, function(data) {
+    _.each(data, function(author) {
+      $.get(authorHTML, function(authorComponent) {
 
-      authors.append(data);
+        authorComponent = authorComponent.replace("AUTHORIMAGE", author.authorImage);
+        authorComponent = authorComponent.replace("AUTHORNAME", author.authorName);
+        authorComponent = authorComponent.replace("AUTHORBIO", author.authorBio);
 
+        authors.append(authorComponent);
+      });
     });
   });
+
 
   authorsOnlyOnceFunctions(authors);
 }

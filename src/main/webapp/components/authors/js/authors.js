@@ -15,23 +15,15 @@ $.fn.serializeObject = function()
     return o;
 };
 
-$('#newBook').click(function() {
-  $('#createBook').toggle('slow');
-});
-
 $('#newAuthor').click(function() {
   $('#createAuthor').toggle('slow');
 });
 
-$('#addBook').click(function() {
-
-  var data = JSON.stringify($('#createBook').serializeObject());
-
-
-  $.post(serverURL + '/addAuthor', function( data ) {
-  });
-});
 
 $('#addAuthor').click(function() {
+  
+  var data = JSON.stringify($('#createBook').serializeObject());
+  $.post(serverURL, function( data ) {
 
+  });
 });

@@ -1,7 +1,6 @@
 package rest.service;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,13 +19,18 @@ public class GetAuthorsService extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // objects that will be used for response
-        PrintWriter out = resp.getWriter();
-
         // request - response configurations
-        resp.setContentType("applictaion/json; charset=UTF-8");
+        req.setCharacterEncoding("UTF-8");
+
+        resp.setContentType("application/json; charset=UTF-8");
         resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+
+        /* objects that will be used for response
+            The key is creating a Writer that (internally) generates a byte stream with the desired encoding.
+            For this reason set response encoding to UTF-8 before creating writer!!
+        */
+        PrintWriter out = resp.getWriter();
 
         // data configuration
         Integer authorSize = 6;
@@ -57,7 +61,7 @@ public class GetAuthorsService extends HttpServlet {
             author.put("authorImage", authorImages[new Random().nextInt(authorImages.length)]);
             author.put("authorName", authorNames[new Random().nextInt(authorNames.length)]);
             author.put("authorBio", authorBio[new Random().nextInt(authorBio.length)]);
-            authors.add(author);
+            authors.put(author);
         }
 
         out.print(authors);
@@ -68,4 +72,6 @@ public class GetAuthorsService extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+
 }

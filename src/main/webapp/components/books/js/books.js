@@ -19,19 +19,11 @@ $('#newBook').click(function() {
   $('#createBook').toggle('slow');
 });
 
-function toggle(element, animation) {
-  $(element).toggle(animation);
-}
 
 $('#addBook').click(function() {
 
   var data = JSON.stringify($('#createBook').serializeObject());
+  $.post(serverURL, function( data ) {
 
-
-  $.post(serverURL + '/addAuthor', function( data ) {
   });
-});
-
-$('#addAuthor').click(function() {
-
 });
